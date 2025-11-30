@@ -14,4 +14,6 @@ run_tests :-
     findall(X, parent(bob, X), Children),
     format('Children of bob: ~w~n', [Children]),
     findall(X-Y, parent(X, Y), Pairs),
-    format('Parents and Children: ~w~n', [Pairs]).
+    format('Parents and Children: ~w~n', [Pairs]),
+    findall(X-Y, (parent(Y, jim), parent(X, Y)), Pairs2),
+    format('Pairs2: ~w~n', [Pairs2]).
