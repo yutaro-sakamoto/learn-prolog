@@ -13,6 +13,23 @@ make(jim).
 
 offsprint(X, Y) :- parent(X, Y).
 
+mother(X, Y) :- parent(X, Y), female(X).
+grandparent(X, Y) :- parent(X, Z), parent(Z, Y).
+
+sister(X, Y) :-
+    parent(Z, Y),
+    parent(Z, X),
+    female(X),
+    dif(X, Y).
+
+hastwochildren(X) :- (
+    (parent(X, Y),
+    sister(Y, _)) :-
+    (parent(X, A),
+    parent(X, B),
+    dif(A, B))
+).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -29,4 +46,6 @@ run_tests :-
     format('Pairs2: ~w~n', [TomsGrandchildren]),
     findall(X, (parent(X, ann), parent(X, pat)), Parent),
     format('Parent: ~w~n', [Parent]),
-    \+ offsprint(liz, tom).
+    \+ offsprint(liz, tom),
+    findall(X-Y, sister(X, Y), Sister),
+    format('Sister: ~w~n', [Sister]).
