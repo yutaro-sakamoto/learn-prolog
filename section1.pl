@@ -30,6 +30,13 @@ hastwochildren(X) :- (
     dif(A, B))
 ).
 
+predecessor(X, Z) :-
+    parent(X, Z).
+
+predecessor(X, Z) :-
+    parent(X, Y),
+    predecessor(Y, Z).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -48,4 +55,13 @@ run_tests :-
     format('Parent: ~w~n', [Parent]),
     \+ offsprint(liz, tom),
     findall(X-Y, sister(X, Y), Sister),
-    format('Sister: ~w~n', [Sister]).
+    format('Sister: ~w~n', [Sister]),
+    findall(X-Y, predecessor(X, Y), Predecessor),
+    format('Predecessor: ~w~n', [Predecessor]).
+
+/*
+multiline
+comments
+*/
+
+% comments
