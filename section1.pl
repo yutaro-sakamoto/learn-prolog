@@ -4,6 +4,14 @@ parent(tom, liz).
 parent(bob, ann).
 parent(bob, pat).
 parent(pat, jim).
+female(pam).
+female(liz).
+female(ann).
+male(tom).
+male(bob).
+make(jim).
+
+offsprint(X, Y) :- parent(X, Y).
 
 run_tests :-
     parent(tom, bob),
@@ -20,4 +28,5 @@ run_tests :-
     findall(X-Y, (parent(tom, X), parent(X, Y)), TomsGrandchildren),
     format('Pairs2: ~w~n', [TomsGrandchildren]),
     findall(X, (parent(X, ann), parent(X, pat)), Parent),
-    format('Parent: ~w~n', [Parent]).
+    format('Parent: ~w~n', [Parent]),
+    \+ offsprint(liz, tom).
