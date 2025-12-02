@@ -41,6 +41,8 @@ fallible(X) :- man(X).
 
 man(socrates).
 
+somebody_has_child :- parent(_, _).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -63,7 +65,8 @@ run_tests :-
     findall(X-Y, predecessor(X, Y), Predecessor),
     format('Predecessor: ~w~n', [Predecessor]),
     fallible(socrates),
-    predecessor(tom, pat).
+    predecessor(tom, pat),
+    somebody_has_child.
 
 /*
 multiline
