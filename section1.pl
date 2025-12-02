@@ -62,7 +62,8 @@ run_tests :-
     format('Sister: ~w~n', [Sister]),
     findall(X-Y, predecessor(X, Y), Predecessor),
     format('Predecessor: ~w~n', [Predecessor]),
-    fallible(socrats).
+    fallible(socrates),
+    predecessor(tom, pat).
 
 /*
 multiline
