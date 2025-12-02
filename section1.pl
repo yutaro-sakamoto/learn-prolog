@@ -37,6 +37,10 @@ predecessor(X, Z) :-
     parent(X, Y),
     predecessor(Y, Z).
 
+fallible(X) :- man(X).
+
+man(socrates).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -57,7 +61,8 @@ run_tests :-
     findall(X-Y, sister(X, Y), Sister),
     format('Sister: ~w~n', [Sister]),
     findall(X-Y, predecessor(X, Y), Predecessor),
-    format('Predecessor: ~w~n', [Predecessor]).
+    format('Predecessor: ~w~n', [Predecessor]),
+    fallible(socrats).
 
 /*
 multiline
