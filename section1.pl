@@ -66,7 +66,8 @@ run_tests :-
     format('Predecessor: ~w~n', [Predecessor]),
     fallible(socrates),
     predecessor(tom, pat),
-    somebody_has_child.
+    somebody_has_child,
+    date(D, M, 1983) = date(15, may, Y), date(D, M, 1983) = date(15, M, Y).
 
 /*
 multiline
