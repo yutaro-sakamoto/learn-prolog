@@ -43,6 +43,10 @@ man(socrates).
 
 somebody_has_child :- parent(_, _).
 
+vertical(seg(point(X, _Y1), point(X, _Y2))).
+
+horizontal(seg(point(_X, Y), point(_X1, Y))).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
