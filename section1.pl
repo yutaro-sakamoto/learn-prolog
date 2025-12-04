@@ -47,6 +47,8 @@ vertical(seg(point(X, _Y1), point(X, _Y2))).
 
 horizontal(seg(point(_X, Y), point(_X1, Y))).
 
+hasachild(X) :- parent(X, _).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -71,7 +73,9 @@ run_tests :-
     fallible(socrates),
     predecessor(tom, pat),
     somebody_has_child,
-    date(D, M, 1983) = date(15, may, Y), date(D, M, 1983) = date(15, M, Y).
+    date(D, M, 1983) = date(15, may, Y), date(D, M, 1983) = date(15, M, Y),
+    vertical(seg(point(2, 3), P)),
+    format('Vertical point P: ~w~n', [P]).
 
 /*
 multiline
