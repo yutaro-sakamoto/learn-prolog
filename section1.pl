@@ -90,8 +90,32 @@ move(
 canget(state(_, _, _, has)).
 
 canget(State1) :-
-    move(State1, Move, State2),
+    move(State1, _, State2),
     canget(State2).
+
+pred1(X, Z) :-
+    parent(X, Z).
+pred1(X, Z) :-
+    parent(X, Y),
+    pred1(Y, Z).
+
+pred2(X, Z) :-
+    parent(X, Y),
+    pred2(Y, Z).
+pred2(X, Z) :-
+    parent(X, Z).
+
+pred3(X, Z) :-
+    parent(X, Z).
+pred3(X, Z) :-
+    pred3(Y, Z),
+    parent(X, Y).
+
+pred4(X, Z) :-
+    pred4(Y, Z),
+    parent(X, Y).
+pred4(X, Z) :-
+    parent(X, Z).
 
 run_tests :-
     parent(tom, bob),
@@ -122,7 +146,10 @@ run_tests :-
     format('Vertical point P: ~w~n', [P]),
     findall(X, (dark(X), big(X)), [DarkBrown]),
     format('DarkBrown: ~w~n', [DarkBrown]),
-    findnsols(1, X, canget(X), CanGetState).
+    findnsols(1, X, canget(X), _),
+    pred1(tom, pat),
+    pred2(tom, pat),
+    pred3(tom, pat).
 
 /*
 multiline
