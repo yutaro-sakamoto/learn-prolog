@@ -49,6 +49,50 @@ horizontal(seg(point(_X, Y), point(_X1, Y))).
 
 hasachild(X) :- parent(X, _).
 
+
+big(bear).
+big(elephant).
+small(cat).
+
+brown(bear).
+black(cat).
+gray(elephant).
+
+dark(Z) :-
+    black(Z).
+
+dark(Z) :-
+    brown(Z).
+
+move(
+    state(middle, onbox, middle, hasnot),
+    grasp,
+    state(middle, obbox, middle, has)).
+
+move(
+    state(P, onfloor, P, H),
+    climb,
+    state(P, onbox, P, H)
+).
+
+move(
+    state(P1, onfloor, P1, H),
+    staet(P1, P2),
+    state(P2, onfloor, P2, H)
+).
+
+move(
+    state(P1, onfloor, B, H),
+    walk(P1, P2),
+    state(P2, onfloor, B, H)
+).
+
+canget(state(_, _, _, has)).
+
+canget(State1) :-
+    move(State1, Move, State2),
+    canget(State2).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -75,7 +119,10 @@ run_tests :-
     somebody_has_child,
     date(D, M, 1983) = date(15, may, Y), date(D, M, 1983) = date(15, M, Y),
     vertical(seg(point(2, 3), P)),
-    format('Vertical point P: ~w~n', [P]).
+    format('Vertical point P: ~w~n', [P]),
+    findall(X, (dark(X), big(X)), [DarkBrown]),
+    format('DarkBrown: ~w~n', [DarkBrown]),
+    findnsols(1, X, canget(X), CanGetState).
 
 /*
 multiline
