@@ -119,6 +119,14 @@ pred4(X, Z) :-
 
 my_list([apple, banana, cherry]).
 
+member(X, [X | _]).
+member(X, [_ | Tail]) :-
+    member(X, Tail).
+
+conc([], L, L).
+conc([X | L1], L2, [X | L3]) :-
+    conc(L1, L2, L3).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
