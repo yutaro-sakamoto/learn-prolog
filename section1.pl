@@ -117,6 +117,8 @@ pred4(X, Z) :-
 pred4(X, Z) :-
     parent(X, Z).
 
+my_list([apple, banana, cherry]).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
