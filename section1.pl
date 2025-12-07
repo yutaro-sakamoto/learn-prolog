@@ -127,6 +127,38 @@ conc([], L, L).
 conc([X | L1], L2, [X | L3]) :-
     conc(L1, L2, L3).
 
+member1(X, L) :-
+    conc(_, [X | _], L).
+
+add(X, L, [X, L]).
+
+del(X, [X | Tail], Tail).
+del(X, [Y | Tail], [Y | Tail1]) :-
+    del(X, Tail, Tail1).
+
+del2(X, [X | Tail], Tail) :- !.
+del2(X, [Y | Tail], [Y | Tail1]) :-
+    del2(X, Tail, Tail1).
+
+del3(_, [], []).
+del3(X, [X | Tail], Result) :-
+    del3(X, Tail, Result).
+del3(X, [Y | Tail], [Y | Result]) :-
+    X \= Y,
+    del3(X, Tail, Result).
+
+sublist(S, L) :-
+    conc(_, L2, L),
+    conc(S, _, L2).
+
+insert(X, List, BiggerList) :-
+    del(X, BiggerList, List).
+
+permutation([], []).
+permutation([X | L], P) :-
+    permutation(L, L1),
+    insert(X, L1, P).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -161,7 +193,18 @@ run_tests :-
     pred2(tom, pat),
     pred3(tom, pat),
     findall(Before-After, conc(Before, [may | After], [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]), [BeforeAfter]),
-    format('Before-After: ~w~n', [BeforeAfter])
+    format('Before-After: ~w~n', [BeforeAfter]),
+    findall(L, del(a, [a, b, a, a], L), Deleted),
+    format('Deleted: ~w~n', [Deleted]),
+    findall(L, del2(a, [a, b, a, a], L), Deleted2),
+    format('Deleted: ~w~n', [Deleted2]),
+    findall(L, del3(a, [a, b, a, a], L), Deleted3),
+    format('Deleted: ~w~n', [Deleted3]),
+    findall(S, sublist(S, [a, b, c]), SubListWithDups),
+    sort(SubListWithDups, SubList),
+    format('SubList: ~w~n', [SubList]),
+    findall(Perm, permutation([a, b, c], Perm), Perms),
+    format('Perm: ~w~n', [Perms])
     .
 
 /*
