@@ -159,7 +159,10 @@ run_tests :-
     findnsols(1, X, canget(X), _),
     pred1(tom, pat),
     pred2(tom, pat),
-    pred3(tom, pat).
+    pred3(tom, pat),
+    findall(Before-After, conc(Before, [may | After], [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec]), [BeforeAfter]),
+    format('Before-After: ~w~n', [BeforeAfter])
+    .
 
 /*
 multiline
