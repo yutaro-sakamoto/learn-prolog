@@ -168,6 +168,11 @@ gcd(X, Y, D) :-
     X > Y,
     gcd(Y, X, D).
 
+mylength([], 0).
+mylength([_ | Tail], N) :-
+    length(Tail, N1),
+    N is 1 + N1.
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -215,9 +220,12 @@ run_tests :-
     findall(Perm, permutation([a, b, c], Perm), Perms),
     format('Perm: ~w~n', [Perms]),
     XX is 1 + 1,
+    format('XX: ~w~n', XX),
     1 + 2 =:= 3 - 0,
     gcd(54, 24, GCD),
-    format('GCD of 54 and 24: ~w~n', [GCD])
+    format('GCD of 54 and 24: ~w~n', [GCD]),
+    mylength([a, b, [c, d], e], Length),
+    format('Length: ~w~n', Length)
     .
 
 /*
