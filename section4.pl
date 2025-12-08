@@ -70,6 +70,28 @@ transitiveClosure(Relation, X, Y) :-
     call(Relation, X, Z),
     transitiveClosure(Relation, Z, Y).
 
+final(s3).
+
+trans(s1, a, s1).
+trans(s1, a, s2).
+trans(s1, b, s1).
+trans(s2, b, s3).
+trans(s3, b, s4).
+
+silent(s2, s4).
+silent(s3, s1).
+
+accepts(S, []) :-
+    final(S).
+
+accepts(S, [X | Rest]) :-
+    trans(S, X, S1),
+    accepts(S1, Rest).
+
+accepts(S, String) :-
+    silent(S, S1),
+    accepts(S1, String).
+
 run_tests :-
     family(_, person(Name, Surname, _, _), [_, _ | _]),
     format('Name, Surname: ~w ~w ~n', [Name, Surname]),
@@ -81,5 +103,8 @@ run_tests :-
     IncomeAverage is Income/N,
     format('Income average: ~w~n', [IncomeAverage]),
     join(friend, tom1, tom3),
-    transitiveClosure(friend, tom1, tom4)
+    transitiveClosure(friend, tom1, tom4),
+    accepts(S, [a, b]),
+    findall(X1-X2-X3, accepts(s1, [X1, X2, X3]), Length3series),
+    format('Length3series: ~w~n', [Length3series])
     .
