@@ -30,9 +30,20 @@ dateofbirth(person(_, _, Date, _), Date).
 salary(person(_, _, _, works(_, S)), S).
 salary(person(_, _, _, unemployed), 0).
 
+total([], 0).
+total([Person | List], Sum) :-
+    salary(Person, S),
+    total(List, Rest),
+    Sum is S + Rest.
+
 run_tests :-
     family(_, person(Name, Surname, _, _), [_, _ | _]),
     format('Name, Surname: ~w ~w ~n', [Name, Surname]),
     findall(N-S, exists(person(N, S, _, _)), AllPerson),
-    format('AllPerson: ~w~n', [AllPerson])
+    format('AllPerson: ~w~n', [AllPerson]),
+    family(Husband, Wife, Children),
+    total([Husband, Wife | Children], Income),
+    length([Husband, Wife | Children], N),
+    IncomeAverage is Income/N,
+    format('Income average: ~w~n', [IncomeAverage])
     .
