@@ -159,6 +159,15 @@ permutation([X | L], P) :-
     permutation(L, L1),
     insert(X, L1, P).
 
+gcd(X, X, X).
+gcd(X, Y, D) :-
+    X < Y,
+    Y1 is Y - X,
+    gcd(X, Y1, D).
+gcd(X, Y, D) :-
+    X > Y,
+    gcd(Y, X, D).
+
 run_tests :-
     parent(tom, bob),
     \+ parent(liz, pat),
@@ -205,7 +214,10 @@ run_tests :-
     format('SubList: ~w~n', [SubList]),
     findall(Perm, permutation([a, b, c], Perm), Perms),
     format('Perm: ~w~n', [Perms]),
-    XX is 1 + 1
+    XX is 1 + 1,
+    1 + 2 =:= 3 - 0,
+    gcd(54, 24, GCD),
+    format('GCD of 54 and 24: ~w~n', [GCD])
     .
 
 /*
