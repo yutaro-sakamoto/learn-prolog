@@ -204,7 +204,8 @@ run_tests :-
     sort(SubListWithDups, SubList),
     format('SubList: ~w~n', [SubList]),
     findall(Perm, permutation([a, b, c], Perm), Perms),
-    format('Perm: ~w~n', [Perms])
+    format('Perm: ~w~n', [Perms]),
+    XX is 1 + 1
     .
 
 /*
