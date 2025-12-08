@@ -36,6 +36,40 @@ total([Person | List], Sum) :-
     total(List, Rest),
     Sum is S + Rest.
 
+husbandSelector(family(Husband, _, _), Husband).
+wifeSelector(family(_, Wife, _), Wife).
+childrenSelector(family(_, _, Children), Children).
+firstChildSelector(family(_, _, [First | _]), First).
+secondChildSelector(family(_, _, [_, Second | _]), Second).
+nthChildSelector(N, Family, Child) :-
+    childrenSelector(Family, ChildList),
+    nth_member(N, ChildList, Child).
+
+nth_member(0, [X | _], X).
+nth_member(N, [_ | Tail], X) :-
+    N > 0,
+    N1 is N - 1,
+    nth_member(N1, Tail, X).
+
+firstnameSelector(person(Name, _, _, _), Name).
+surnameSelector(person(_, Surname, _, _), Surname).
+bornSelector(person(_, _, Date, _), Date).
+
+join(Relation, X, Z) :-
+    call(Relation, X, Y),
+    call(Relation, Y, Z).
+
+friend(tom1, tom2).
+friend(tom2, tom3).
+friend(tom3, tom4).
+
+transitiveClosure(Relation, X, Y) :-
+    call(Relation, X, Y).
+
+transitiveClosure(Relation, X, Y) :-
+    call(Relation, X, Z),
+    transitiveClosure(Relation, Z, Y).
+
 run_tests :-
     family(_, person(Name, Surname, _, _), [_, _ | _]),
     format('Name, Surname: ~w ~w ~n', [Name, Surname]),
@@ -45,5 +79,7 @@ run_tests :-
     total([Husband, Wife | Children], Income),
     length([Husband, Wife | Children], N),
     IncomeAverage is Income/N,
-    format('Income average: ~w~n', [IncomeAverage])
+    format('Income average: ~w~n', [IncomeAverage]),
+    join(friend, tom1, tom3),
+    transitiveClosure(friend, tom1, tom4)
     .
