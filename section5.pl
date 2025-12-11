@@ -58,6 +58,15 @@ attacks(X/Y, Others) :-
 member2(X, [X | _]).
 member2(X, [_ | L]) :- member2(X, L).
 
+taxi(X) :-
+    name(X, Xlist),
+    name(taxi, Tlist),
+    conc(Tlist, _, Xlist).
+
+conc([], L, L).
+conc([A | L1], L2, [A | L3]) :-
+    conc(L1, L2, L3).
+
 run_tests :-
     \+ (f(1, Y), 2 < Y),
     mymax(1, 2, 2),
